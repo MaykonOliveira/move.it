@@ -1,11 +1,12 @@
-import { Container } from './styles'
-
 import Head from 'next/head';
 
 import ExperienceBar from "../components/ExperienceBar";
 import Profile from "../components/Profile";
 import CompletedChallenges from "../components/CompletedChallenges";
 import Countdown from "../components/Countdown";
+
+import { Container } from './styles'
+import ChallengeBox from '../components/ChallengeBox';
 
 export default function Home() {
   return (
@@ -20,10 +21,12 @@ export default function Home() {
         <div>
           <Profile />
           <CompletedChallenges />
-          <Countdown></Countdown>
+          <Countdown />
         </div>
 
-        <div></div>
+        <div>
+          <ChallengeBox></ChallengeBox>
+        </div>
 
       </section>
     </Container>
