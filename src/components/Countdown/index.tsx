@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { IoMdArrowDropright } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
 import { AiOutlineCheckCircle } from "react-icons/ai";
+
+import { CountdownContext } from "../../providers/CountdownContext";
 
 import {
   Container,
@@ -14,9 +16,7 @@ let countdownTimeout: NodeJS.Timeout;
 const defaultCountdownTime = 0.1 * 60;
 
 const Countdown: React.FC = () => {
-  const [time, setTime] = useState(defaultCountdownTime);
-  const [isActive, setIsActive] = useState(false);
-  const [hasFinished, setHasFinished] = useState(false);
+  const { hasFinished, setHasFinishedStatus, time, setTimeValue, isActive, setIsActiveStatus } = useContext(CountdownContext);
 
   const minutes = Math.floor(time / 60);
   const seconds = time % 60;
@@ -29,23 +29,23 @@ const Countdown: React.FC = () => {
     .split("");
 
   function startCountdown() {
-    setIsActive(true);
+    setIsActiveStatus();
   }
 
   function resetCountdown() {
     clearTimeout(countdownTimeout);
-    setIsActive(false);
-    setTime(defaultCountdownTime);
+    setIsActiveStatus();
+    setTimeValue(defaultCountdownTime);
   }
 
   useEffect(() => {
     if (isActive && time > 0) {
       countdownTimeout = setTimeout(() => {
-        setTime(time - 1);
+        setTimeValue(time - 1);
       }, 1000);
     } else if (isActive && time === 0) {
-      setHasFinished(true);
-      setIsActive(false);
+      setHasFinishedStatus();
+      setIsActiveStatus();
     }
   }, [isActive, time]);
 
